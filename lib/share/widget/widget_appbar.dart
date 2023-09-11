@@ -10,13 +10,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: false,
       title: titleWidget ??
           Text(
             title ?? '',
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
       automaticallyImplyLeading: true,
-      iconTheme: IconThemeData(color: Colors.black),
+      iconTheme: const IconThemeData(color: Colors.black),
     );
   }
 
@@ -24,5 +25,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
   Widget get child => const SizedBox();
 
   @override
-  Size get preferredSize => Size(double.maxFinite, 60);
+  Size get preferredSize => const Size(double.maxFinite, 60);
 }
