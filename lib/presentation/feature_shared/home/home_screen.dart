@@ -17,79 +17,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _MainFoodPageState extends State<HomePage> with TickerProviderStateMixin {
-  final List<Widget> _buildBuyerScreens = [
+  final List<Widget> _buildBuyerScreens = const [
     DashboardPage(),
     CartHomePage(),
     OrderScreen(),
     PersonalPage(),
   ];
 
-  final List<Widget> _buildSellerScreens = [
+  final List<Widget> _buildSellerScreens = const [
     DashboardPage(),
     ManageProductScreen(),
     OrderScreen(),
     PersonalPage(),
   ];
 
-  // final List<PersistentBottomNavBarItem> _navBuyerBarsItems = [
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(CupertinoIcons.home),
-  //     title: ("Home"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(CupertinoIcons.shopping_cart),
-  //     title: ("Card"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(CupertinoIcons.archivebox),
-  //     title: ("Order"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(CupertinoIcons.person),
-  //     title: ("Personal"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  // ];
-  //
-  // final List<PersistentBottomNavBarItem> _navSellerBarsItems = [
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(CupertinoIcons.home),
-  //     title: ("Home"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(Icons.production_quantity_limits),
-  //     title: ("Product Manager"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(Icons.add_card),
-  //     title: ("Order Manager"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  //   PersistentBottomNavBarItem(
-  //     icon: Icon(CupertinoIcons.person),
-  //     title: ("Personal"),
-  //     activeColorPrimary: kPrimaryColor,
-  //     inactiveColorPrimary: CupertinoColors.systemGrey,
-  //   ),
-  // ];
-  //
-  // final PersistentTabController _controller = PersistentTabController();
-
   final prefRepo = Get.find<PrefRepo>();
   final tabIndex = ValueNotifier(0);
   late final TabController tabController;
+  bool shouldShowBuyer = false;
 
   @override
   void initState() {
@@ -100,6 +45,11 @@ class _MainFoodPageState extends State<HomePage> with TickerProviderStateMixin {
           tabIndex.value = tabController.index;
         }
       });
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      shouldShowBuyer =
+          Get.find<PrefRepo>().getCurrentUser().buyerModel != null;
+    });
   }
 
   @override
@@ -115,12 +65,13 @@ class _MainFoodPageState extends State<HomePage> with TickerProviderStateMixin {
           child: Scaffold(
             body: TabBarView(
               controller: tabController,
-              children: const [
-                KeepAlivePage(child: DashboardPage()),
-                KeepAlivePage(child: CartHomePage()),
-                KeepAlivePage(child: OrderScreen()),
-                KeepAlivePage(child: PersonalPage()),
-              ],
+              children: shouldShowBuyer
+                  ? _buildBuyerScreens
+                      .map((e) => KeepAlivePage(child: e))
+                      .toList()
+                  : _buildSellerScreens
+                      .map((e) => KeepAlivePage(child: e))
+                      .toList(),
             ),
             bottomNavigationBar: Container(
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 24),

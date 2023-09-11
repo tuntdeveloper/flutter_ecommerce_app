@@ -19,8 +19,9 @@ import 'data/repo/product_repo.dart';
 
 Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
-  Get.lazyPut<Uuid>(() => Uuid());
+  Get.lazyPut<Uuid>(() => const Uuid());
 
+  Get.lazyPut<SharedPreferences>(() => sharedPreferences);
   Get.lazyPut<SellerAuthRepo>(() => SellerAuthRepo(sharedPreferences));
   Get.lazyPut<BuyerAuthRepo>(() => BuyerAuthRepo(sharedPreferences));
   Get.lazyPut<PrefRepo>(() => PrefRepo(sharedPreferences));

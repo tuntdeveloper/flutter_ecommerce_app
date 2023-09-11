@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_app/design/extension/double_extension.dart';
 import 'package:flutter_ecommerce_app/presentation/feature_shared/home/components/title_widget.dart';
 import 'package:get/get.dart';
 
@@ -10,10 +9,9 @@ class HomeRevenueWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TitleWidget(title: 'Your revenue'),
+        const TitleWidget(title: 'Your revenue'),
         Container(
           padding: const EdgeInsets.all(24),
-          height: 0.15.h,
           width: double.infinity,
           child: Column(
             children: [

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_app/design/colors.dart';
 import 'package:get/get.dart';
 
 import '../../../data/controller/auth_controller.dart';
@@ -15,73 +16,76 @@ class SetupProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: GetBuilder<AuthController>(builder: (controller) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
-                  width: 1.0.w,
-                  height: 0.1.h,
-                  child: Text(
-                      'NEXT, WE NEED TO KNOW ABOUT YOUR PRODUCTS ON SALE',
-                      style: TextStyle(
-                          decoration: TextDecoration.none,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 0.05.w,
-                          color: Colors.black)),
-                ),
-                SizedBox(height: 0.01.h),
-                Column(
-                  children: List.generate(controller.newProducts.length,
-                      (indexOfNewProducts) {
-                    return _buildNewProductItem(context, indexOfNewProducts);
-                  }),
-                ),
-                SizedBox(height: 0.01.h),
-                InkWell(
-                  onTap: () {
-                    controller.insertNewProducts();
-                  },
-                  child: Container(
+    return ColoredBox(
+      color: AppColors.of(context).backgroundColor,
+      child: SafeArea(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: GetBuilder<AuthController>(builder: (controller) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
                     alignment: Alignment.center,
                     padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    width: 0.9.w,
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
+                    width: 1.0.w,
                     height: 0.1.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(29),
-                      color: kPrimaryLightColor,
-                    ),
-                    child: Text('Click to add new product'),
+                    child: Text(
+                        'NEXT, WE NEED TO KNOW ABOUT YOUR PRODUCTS ON SALE',
+                        style: TextStyle(
+                            decoration: TextDecoration.none,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 0.05.w,
+                            color: Colors.black)),
                   ),
-                ),
-                SizedBox(height: 0.04.h),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(29),
-                  child: MaterialButton(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 40),
-                    minWidth: 0.8.w,
-                    color: kPrimaryColor,
-                    onPressed: () {
-                      controller.uploadProducts(context);
+                  SizedBox(height: 0.01.h),
+                  Column(
+                    children: List.generate(controller.newProducts.length,
+                        (indexOfNewProducts) {
+                      return _buildNewProductItem(context, indexOfNewProducts);
+                    }),
+                  ),
+                  SizedBox(height: 0.01.h),
+                  InkWell(
+                    onTap: () {
+                      controller.insertNewProducts();
                     },
-                    child: const Text(
-                      "Done, Congratulation!",
-                      style: TextStyle(color: Colors.white),
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 20),
+                      width: 0.9.w,
+                      height: 0.1.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(29),
+                        color: kPrimaryLightColor,
+                      ),
+                      child: Text('Click to add new product'),
                     ),
                   ),
-                ),
-                SizedBox(height: 0.01.h),
-              ],
-            );
-          }),
+                  SizedBox(height: 0.04.h),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(29),
+                    child: MaterialButton(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 40),
+                      minWidth: 0.8.w,
+                      color: kPrimaryColor,
+                      onPressed: () {
+                        controller.uploadProducts(context);
+                      },
+                      child: const Text(
+                        "Done, Congratulation!",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 0.01.h),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

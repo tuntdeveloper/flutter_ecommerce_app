@@ -83,7 +83,7 @@ class _BuildBuyerAppBarState extends State<_BuildBuyerAppBar> {
                       children: [
                         Icon(CupertinoIcons.search),
                         SizedBox(width: 8),
-                        Text('Search'),
+                        Text('Search for products, shops...'),
                       ],
                     ),
                   ),
@@ -205,30 +205,47 @@ class _BuildSellerAppBarState extends State<_BuildSellerAppBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
+      padding: const EdgeInsets.only(top: 4.0, left: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
-              width: 0.56.w,
-              height: 0.13.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: kSecondaryColor,
-              ),
-              child: TextField(
-                autofocus: false,
-                decoration: InputDecoration(
-                    hintText: "Search for products",
-                    icon: Image.asset(
-                      "assets/icons/find.png",
-                      fit: BoxFit.fill,
-                      height: 0.05.w,
+          Expanded(
+            child: SearchAnchor(
+              isFullScreen: true,
+              suggestionsBuilder: (context, controller) {
+                return <Widget>[
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('No search history.',
+                          style: TextStyle(color: Colors.grey)),
                     ),
-                    border: InputBorder.none),
-              )),
+                  )
+                ];
+              },
+              builder: (BuildContext context, SearchController controller) {
+                return Material(
+                  borderRadius: BorderRadius.circular(16.0),
+                  elevation: 1,
+                  shadowColor: Colors.grey,
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppColors.of(context).backgroundColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(CupertinoIcons.search),
+                        SizedBox(width: 8),
+                        Text('Search for products...'),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
